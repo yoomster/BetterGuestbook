@@ -7,45 +7,64 @@ using System.Threading.Tasks;
 
 namespace GuestBookLibrary
 {
-    public class UserQuestions
+    public static class UserQuestions
     {
-        public static void AskFirstName(List <GuestModel> people)
+
+        public static string GetInformationFromConsole(string message)
         {
-            string firstName;
+            string output = "";
+
+            Console.Write(message);
+            output = Console.ReadLine();
+
+            return output;
+        }
+        public static int GetNumberFromConsole (string message)
+        {
+            bool isValidNr;
+            int output;
             do
             {
-                Console.Write("Please enter your first name (or type 'exit' to stop): ");
-                firstName = Console.ReadLine();
-
-                if (firstName != "exit")
+                Console.Write(message);
+                string TextNr = Console.ReadLine();
+                isValidNr = int.TryParse(TextNr, out output); 
+                if (isValidNr == false)
                 {
-                    GuestModel person = new GuestModel();
-                    person.FirstName = firstName;
-                    person.LastName = AskLastName();
+                    Console.WriteLine("That's an invalid nr, plz try again.");
+                }
+            } while (isValidNr == false);
 
-                    people.Add(person);
+            return output;
 
-                    person.MessageToHost = AskMessage();
+        }
 
-                    Console.WriteLine();
+        public static void AskGuestAllInfo(List<GuestModel> guests)
+        {
+            GuestModel guest = new GuestModel();
+
+            guest.FirstName = GetInformationFromConsole("Please enter your first name: ");
+            guest.LastName = GetInformationFromConsole("Please enter your last name: ");
+            guest.MessageToHost = GetInformationFromConsole("If you like, you may leave a message for your host here: ");
+            guest.Age = GetNumberFromConsole("Please enter your age: ");
+
+            guests.Add(guest);
+        }
+
+        public static void AskMorePeopleComing(List<GuestModel> guests)
+        {
+            string moreGuestComing;
+            do
+            {
+                Console.Write("Is there more guest coming? (yes/no): ");
+                moreGuestComing = Console.ReadLine();
+                Console.WriteLine();
+
+                if (moreGuestComing == "yes")
+                {
+                    AskGuestAllInfo(guests);
                 } 
-            } while (firstName != "exit");
-        }
+            } while (moreGuestComing == "yes");
 
-        public static string AskLastName()
-        {
-            Console.Write("And your last name: ");
-            string lastName = Console.ReadLine();
-
-            return lastName;
-        }
-
-        public static string AskMessage()
-        {
-            Console.Write("If you like, you may leave a message for your host here: ");
-            string message = Console.ReadLine();
-
-            return message;
         }
     }
 }

@@ -19,14 +19,17 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            List<GuestModel> people = new List<GuestModel>();
+            List<GuestModel> guest = new List<GuestModel>();
            
             UserMessages.Welcome();
 
-            UserQuestions.AskFirstName(people);
+            UserQuestions.AskGuestAllInfo(guest);
 
-            UserMessages.ShowAllMessages(people);
+            UserQuestions.AskMorePeopleComing(guest);
 
+            Console.Clear();
+
+            UserMessages.ShowAllMessages(guest);
 
             Console.ReadLine();
         }

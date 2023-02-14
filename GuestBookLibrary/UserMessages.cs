@@ -20,8 +20,7 @@ namespace GuestBookLibrary
             foreach (GuestModel p in people)
             {
                 Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine($"{p.FirstName} {p.LastName} left you the next message: {p.MessageToHost}");
+                Console.WriteLine(p.GuestInfo);
             }
         }
 
